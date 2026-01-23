@@ -68,7 +68,7 @@ cp .env.example .env
 
 Edit `.env` with your actual values:
 - **Email**: Gmail address and app-specific password
-- **ElevenLabs**: API key and voice ID
+- **Google Cloud TTS (Vertex AI voices)**: Voice name and language code (credentials via `GCS_CREDENTIALS_FILE`)
 - **Google Cloud Storage**: Project ID, bucket name, and credentials file
 - **Podcast**: Metadata (title, description, author)
 
@@ -140,7 +140,7 @@ python -m unittest discover -s tests
 The script will:
 1. Fetch the latest email matching your subject filter
 2. Clean and process the text
-3. Generate an MP3 file using ElevenLabs
+3. Generate an MP3 file using Google Cloud TTS
 4. Upload the audio to Google Cloud Storage
 5. Generate/update the RSS feed
 6. Upload the feed to Google Cloud Storage
