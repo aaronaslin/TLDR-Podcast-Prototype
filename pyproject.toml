@@ -1,0 +1,8 @@
+[project]
+name = "tldr-podcast"
+version = "0.1.0"
+description = "Email-to-podcast pipeline"
+requires-python = ">=3.10"
+
+[tool.unittest]
+# Placeholder section to keep tests discoverable if tooling expands later.

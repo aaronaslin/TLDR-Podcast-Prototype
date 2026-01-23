@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.tldrpodcast.daily</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/aaslin/Documents/GitHub/TLDR Podcast Prototype/scripts/run_daily_pipeline.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/aaslin/Documents/GitHub/TLDR Podcast Prototype</string>
+
+    <!--
+      Run frequently; the script itself enforces a fixed timezone (Pacific by default)
+      via TARGET_TZ/TARGET_TIME. This avoids schedule drift when traveling.
+    -->
+    <key>StartInterval</key>
+    <integer>60</integer>
+
+    <!-- Keep separate launchd-level logs as a backstop; main logs go to data/logs/. -->
+    <key>StandardOutPath</key>
+    <string>/Users/aaslin/Documents/GitHub/TLDR Podcast Prototype/data/logs/launchd_stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/aaslin/Documents/GitHub/TLDR Podcast Prototype/data/logs/launchd_stderr.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+  </dict>
+</plist>
