@@ -58,6 +58,18 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+**Note on Dependency Management:**
+This project uses `pip-tools` to pin exact dependency versions for reproducible builds and supply chain security.
+
+- `requirements.in`: Source file with flexible version constraints
+- `requirements.txt`: Auto-generated lockfile with exact pinned versions (including transitive dependencies)
+
+To update dependencies:
+```bash
+pip install pip-tools
+pip-compile requirements.in -o requirements.txt --resolver=backtracking
+```
+
 ### 2. Configure Environment
 
 Copy `.env.example` to `.env` and fill in your credentials:
