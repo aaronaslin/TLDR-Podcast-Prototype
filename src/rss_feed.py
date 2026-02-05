@@ -61,9 +61,14 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
     # Podcast metadata
     fg.title(Config.PODCAST_TITLE)
     fg.description(Config.PODCAST_DESCRIPTION)
-    fg.author({'name': Config.PODCAST_AUTHOR, 'email': Config.PODCAST_EMAIL})
-    fg.link(href=Config.RSS_FEED_URL, rel='alternate')
-    fg.link(href=Config.RSS_FEED_URL, rel='self')
+    if Config.PODCAST_EMAIL:
+        fg.author({'name': Config.PODCAST_AUTHOR, 'email': Config.PODCAST_EMAIL})
+    else:
+        fg.author({'name': Config.PODCAST_AUTHOR})
+
+    if Config.RSS_FEED_URL:
+        fg.link(href=Config.RSS_FEED_URL, rel='alternate')
+        fg.link(href=Config.RSS_FEED_URL, rel='self')
     fg.language('en')
     
     if Config.PODCAST_IMAGE_URL:
@@ -78,7 +83,8 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
     if Config.PODCAST_IMAGE_URL:
         fg.podcast.itunes_image(Config.PODCAST_IMAGE_URL)
     fg.podcast.itunes_explicit('no')
-    fg.podcast.itunes_owner(Config.PODCAST_OWNER, Config.PODCAST_EMAIL)
+    if Config.PODCAST_OWNER and Config.PODCAST_EMAIL:
+        fg.podcast.itunes_owner(Config.PODCAST_OWNER, Config.PODCAST_EMAIL)
     
     # Add episodes
     for episode in episodes:
@@ -98,8 +104,9 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
         fe.published(episode['pub_date'])
         
         # Add episode link (use RSS feed URL if not provided)
-        episode_link = episode.get('link', Config.RSS_FEED_URL)
-        fe.link(href=episode_link)
+        episode_link = episode.get('link') or Config.RSS_FEED_URL
+        if episode_link:
+            fe.link(href=episode_link)
         
         # Add audio enclosure with proper file size
         file_size = episode.get('file_size', 0)

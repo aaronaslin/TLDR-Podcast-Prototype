@@ -1,5 +1,7 @@
 """Configuration loader for Email-to-Podcast application."""
 import os
+import json
+import tempfile
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -44,7 +46,19 @@ class Config:
 	# Google Cloud Storage settings
 	GCP_PROJECT_ID = os.getenv('GCP_PROJECT_ID')
 	GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME')
-	GCS_CREDENTIALS_FILE = os.getenv('GCS_CREDENTIALS_FILE')
+	
+	# Handle credentials: Cloud Run uses Secret Manager (JSON string), local uses file
+	_credentials_json = os.getenv('GCS_CREDENTIALS_JSON')
+	if _credentials_json:
+		# Cloud Run: write secret to temp file for google-cloud-storage library
+		_temp_creds = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json')
+		_temp_creds.write(_credentials_json)
+		_temp_creds.flush()
+		_temp_creds.close()
+		GCS_CREDENTIALS_FILE = _temp_creds.name
+	else:
+		# Local: use file path
+		GCS_CREDENTIALS_FILE = os.getenv('GCS_CREDENTIALS_FILE')
     
 	# Podcast metadata
 	PODCAST_TITLE = os.getenv('PODCAST_TITLE', 'My Daily Digest Podcast')

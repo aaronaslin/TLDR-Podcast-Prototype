@@ -51,3 +51,6 @@ assets/audio/
 
 # Logs
 *.log
+
+# Docker
+.dockerignore
