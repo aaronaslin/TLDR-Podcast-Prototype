@@ -1,0 +1,31 @@
+# Python dependencies for Email-to-Podcast application
+
+# Email handling (built-in, no install needed)
+# imaplib - built-in
+# email - built-in
+
+# Text-to-Speech
+google-cloud-texttospeech>=2.14.0
+
+# Audio processing
+pydub>=0.25.1
+
+# Google Cloud Storage
+google-cloud-storage>=2.10.0
+
+# HTML parsing and text processing
+beautifulsoup4>=4.12.0
+html2text>=2020.1.16
+
+# Configuration management
+python-dotenv>=1.0.0
+
+# RSS feed generation
+feedgen>=0.9.0
+
+# Optional: For better text cleaning
+bleach>=6.0.0
+
+# Note: audioop-lts>=0.2.0 is only needed for Python 3.13+
+# For Python <3.13, audioop is built-in
+# If using Python 3.13+, manually install: pip install audioop-lts>=0.2.0
