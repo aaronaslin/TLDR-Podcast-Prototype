@@ -66,9 +66,10 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
     else:
         fg.author({'name': Config.PODCAST_AUTHOR})
 
-    if Config.RSS_FEED_URL:
-        fg.link(href=Config.RSS_FEED_URL, rel='alternate')
-        fg.link(href=Config.RSS_FEED_URL, rel='self')
+    # RSS requires at least one link
+    feed_url = Config.RSS_FEED_URL or 'https://example.com/feed.xml'
+    fg.link(href=feed_url, rel='alternate')
+    fg.link(href=feed_url, rel='self')
     fg.language('en')
     
     if Config.PODCAST_IMAGE_URL:
@@ -104,9 +105,8 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
         fe.published(episode['pub_date'])
         
         # Add episode link (use RSS feed URL if not provided)
-        episode_link = episode.get('link') or Config.RSS_FEED_URL
-        if episode_link:
-            fe.link(href=episode_link)
+        episode_link = episode.get('link', Config.RSS_FEED_URL)
+        fe.link(href=episode_link)
         
         # Add audio enclosure with proper file size
         file_size = episode.get('file_size', 0)
