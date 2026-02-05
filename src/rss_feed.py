@@ -78,7 +78,8 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
     if Config.PODCAST_IMAGE_URL:
         fg.podcast.itunes_image(Config.PODCAST_IMAGE_URL)
     fg.podcast.itunes_explicit('no')
-    fg.podcast.itunes_owner(Config.PODCAST_OWNER, Config.PODCAST_EMAIL)
+    if Config.PODCAST_OWNER and Config.PODCAST_EMAIL:
+        fg.podcast.itunes_owner(Config.PODCAST_OWNER, Config.PODCAST_EMAIL)
     
     # Add episodes
     for episode in episodes:
