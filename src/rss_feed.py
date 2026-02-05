@@ -61,9 +61,15 @@ def create_or_update_rss_feed(episodes, output_file='feed.xml'):
     # Podcast metadata
     fg.title(Config.PODCAST_TITLE)
     fg.description(Config.PODCAST_DESCRIPTION)
-    fg.author({'name': Config.PODCAST_AUTHOR, 'email': Config.PODCAST_EMAIL})
-    fg.link(href=Config.RSS_FEED_URL, rel='alternate')
-    fg.link(href=Config.RSS_FEED_URL, rel='self')
+    if Config.PODCAST_EMAIL:
+        fg.author({'name': Config.PODCAST_AUTHOR, 'email': Config.PODCAST_EMAIL})
+    else:
+        fg.author({'name': Config.PODCAST_AUTHOR})
+
+    # RSS requires at least one link
+    feed_url = Config.RSS_FEED_URL or 'https://example.com/feed.xml'
+    fg.link(href=feed_url, rel='alternate')
+    fg.link(href=feed_url, rel='self')
     fg.language('en')
     
     if Config.PODCAST_IMAGE_URL:
