@@ -14,14 +14,22 @@ import io
 from google.cloud import texttospeech
 from src.config import Config
 
-# Ensure Homebrew ffmpeg/ffprobe are on PATH for pydub
-os.environ["PATH"] = "/opt/homebrew/bin:" + os.environ.get("PATH", "")
 from pydub import AudioSegment
 from pydub.effects import normalize
 
 # Ensure ffmpeg/ffprobe are found for pydub
-FFMPEG_PATH = shutil.which("ffmpeg") or "/opt/homebrew/bin/ffmpeg"
-FFPROBE_PATH = shutil.which("ffprobe") or "/opt/homebrew/bin/ffprobe"
+FFMPEG_PATH = shutil.which("ffmpeg")
+FFPROBE_PATH = shutil.which("ffprobe")
+
+if not FFMPEG_PATH or not FFPROBE_PATH:
+    raise RuntimeError(
+        "ffmpeg and ffprobe are required but not found in PATH.\n"
+        "Please install ffmpeg:\n"
+        "  macOS: brew install ffmpeg\n"
+        "  Ubuntu/Debian: apt-get install ffmpeg\n"
+        "  Windows: download from https://ffmpeg.org/download.html"
+    )
+
 AudioSegment.converter = FFMPEG_PATH
 AudioSegment.ffprobe = FFPROBE_PATH
 
