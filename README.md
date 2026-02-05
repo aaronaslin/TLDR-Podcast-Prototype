@@ -50,7 +50,22 @@ Automatically convert email digests into podcast episodes using Python, Google C
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. Install System Dependencies
+
+**ffmpeg** is required for audio processing:
+
+```bash
+# macOS
+brew install ffmpeg
+
+# Ubuntu/Debian
+sudo apt-get install ffmpeg
+
+# Windows
+# Download from https://ffmpeg.org/download.html and add to PATH
+```
+
+### 2. Install Python Dependencies
 
 ```bash
 python3 -m venv venv
@@ -58,7 +73,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Configure Environment
+### 3. Configure Environment
 
 Copy `.env.example` to `.env` and fill in your credentials:
 
@@ -72,7 +87,7 @@ Edit `.env` with your actual values:
 - **Google Cloud Storage**: Project ID, bucket name, and credentials file
 - **Podcast**: Metadata (title, description, author)
 
-### 3. Gmail App Password
+### 4. Gmail App Password
 
 For Gmail, you'll need an app-specific password:
 1. Enable 2-factor authentication on your Google account
@@ -80,7 +95,7 @@ For Gmail, you'll need an app-specific password:
 3. Generate a new app password for "Mail"
 4. Use this password in your `.env` file
 
-### 4. Google Cloud Storage Setup
+### 5. Google Cloud Storage Setup
 
 See [docs/SETUP_GCS.md](docs/SETUP_GCS.md) for detailed setup instructions.
 

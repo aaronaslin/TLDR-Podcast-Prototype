@@ -1,4 +1,4 @@
-PYTHON ?= /Users/aaslin/Documents/GitHub/TLDR Podcast Prototype/venv/bin/python
+PYTHON ?= ./venv/bin/python
 
 .PHONY: run test lint fmt
 
