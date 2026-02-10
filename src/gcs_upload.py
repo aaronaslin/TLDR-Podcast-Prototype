@@ -31,10 +31,11 @@ def upload_to_gcs(local_file_path, gcs_key, content_type='audio/mpeg', make_publ
         # Create blob (file object)
         blob = bucket.blob(gcs_key)
         
-        # Upload file
+        # Upload file (5 min timeout for large audio files on slow connections)
         blob.upload_from_filename(
             local_file_path,
-            content_type=content_type
+            content_type=content_type,
+            timeout=300
         )
         
         # Make publicly accessible.
