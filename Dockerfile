@@ -23,14 +23,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy Python packages from builder
-COPY --from=builder /root/.local /root/.local
+COPY --from=builder /root/.local /home/podcast/.local
 
 # Copy application code
 COPY src/ ./src/
 COPY main.py .
+COPY assets/ ./assets/
 
 # Ensure scripts are in PATH
-ENV PATH=/root/.local/bin:$PATH
+ENV PATH=/home/podcast/.local/bin:$PATH
+# Ensure Python output isn't buffered (so logs appear in Cloud Run)
+ENV PYTHONUNBUFFERED=1
 
 # Create output directory
 RUN mkdir -p data/output data/logs
